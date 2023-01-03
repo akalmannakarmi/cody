@@ -4,29 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link rel="icon" href="{{ url_for('static',filename='img/icon.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static',filename='bootstrap-5.2.3-dist/css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='css/base.css') }}" /> {% block head %} {% endblock %}
     <title>{% block title %} Base {% endblock %}</title>
 </head>
 
 <body>
-    {% block navBar %}
-    <div class="navbar">
-        <a href="#">
-            <img src="{{ url_for('static',filename='img/logo2.png') }}" alt="navbar-logo" class="navbar-logo" />
-        </a>
-        <ul class="navbar-list">
-            <li class="navbar-items"><a href="#">HOME</a></li>
-            <li class="navbar-items"><a href="#events">EVENTS</a></li>
-            <li class="navbar-items"><a href="#downloads">DOWNLOADS</a></li>
-            <li class="navbar-items"><a href="#career">CAREER</a></li>
-            <li class="navbar-items"><a href="#about">ABOUT US</a></li>
-            <li class="navbar-items"><a href="#contact">CONTACT</a></li>
-        </ul>
-        <button class="navbar-button"><a href="/signup">JOIN NOW</a></button>
-    </div>
-    {% endblock %} {% block body %} This is Base.html {% endblock %}
+    {% block navBar %} {% endblock %} {% block body %} This is Base.html {% endblock %}
 
     <script src="{{ url_for('static',filename='bootstrap-5.2.3-dist/js/bootstrap.bundle.js') }}"></script>
     {% block foot %} {% endblock %}

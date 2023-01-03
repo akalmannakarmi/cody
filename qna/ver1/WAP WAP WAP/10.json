@@ -1,0 +1,1 @@
+{ "qnas": [{ "cquestion": "#include <stdio.h>\nint main(){\n    char a[5];\n    printf(\"Enter your Name: \");\n    scanf(\"%s\",a);\n    printf(\"%s\",a);\n    return 0;\n}", "answer": "WAP to print name" }] }

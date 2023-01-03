@@ -8,20 +8,29 @@ for (let i = 0; i < getFields.length; i++) {
 
 function cbClick(btn) {
     btn.style.visibility = 'hidden';
-    category = btn.value
-    value = btn.innerText
+    category = document.getElementById(btn.value).innerText
+    value = btn.innerHTML
     getQnA()
 }
 
 function show() {
     console.log(data);
-    document.getElementById("question").innerHTML = data['question'];
-    document.getElementById("answer").innerHTML = data['answer'];
+    document.getElementById("question").innerHTML = data['question'] ? data['question'] : "";
+    document.getElementById("answer").innerHTML = data['answer'] ? data['answer'] : "";
+    document.getElementById("question-code").innerHTML = data['cquestion'] ? data['cquestion'] : "";
+    document.getElementById("answer-code").innerHTML = data['canswer'] ? data['canswer'] : "";
+
+    document.getElementById("question-img").src = `${window.origin}/getImg/${data['qimage']}`;
+    document.getElementById("answer-img").src = `${window.origin}/getImg/${data['aimage']}`;
+
+    document.getElementById("question-img").style.visibility = data['qimage'] ? "visible" : "hidden";
+    document.getElementById("answer-img").style.visibility = data['aimage'] ? "visible" : "hidden";
+
 }
 
 function getQnA() {
     let bodyData = JSON.stringify({
-        'version': '1',
+        'version': 'ver1',
         'category': category,
         'value': value
     })

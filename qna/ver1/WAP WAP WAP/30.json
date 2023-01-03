@@ -1,0 +1,1 @@
+{ "qnas": [{ "cquestion": "#include <stdio.h>\nint main(){\n    int a;\n    printf(\"Enter num: \");\n    scanf(\"%d\",&a);\n    if (a%2 == 0){\n        printf(\"Even\");\n    }else{\n        printf(\"Odd\");\n    }\n    return 0;\n}", "answer": "WAP to print even or odd" }] }
