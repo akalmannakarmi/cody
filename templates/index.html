@@ -1,0 +1,102 @@
+{% extends '0Base.html' %} {% block title %} Cody | Play {% endblock %} {% block navBar %}
+<div></div>{% endblock %} {% block body %}
+
+<div class='container'>
+    <div class='row py-4'>
+        <div class='col'>
+            <p class="text-center fw-bold fs-1">Cody</p>
+        </div>
+    </div>
+    <div class='row pt-2'>
+        <div class='col'>
+            <p class="text-center fw-bold fs-4">WAP WAP WAP</p>
+        </div>
+        <div class='col'>
+            <p class="text-center fw-bold fs-4">Memes</p>
+        </div>
+        <div class='col'>
+            <p class="text-center fw-bold fs-4">Data data</p>
+        </div>
+        <div class='col'>
+            <p class="text-center fw-bold fs-4">Word</p>
+        </div>
+        <div class='col'>
+            <p class="text-center fw-bold fs-4">History</p>
+        </div>
+    </div>
+    <div class='row py-2'>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="1">10</button></div>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="2">10</button></div>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="3">10</button></div>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="4">10</button></div>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="5">10</button></div>
+    </div>
+    <div class='row py-2'>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="1">20</button></div>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="2">20</button></div>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="3">20</button></div>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="4">20</button></div>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="5">20</button></div>
+    </div>
+    <div class='row py-2'>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="1">30</button></div>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="2">30</button></div>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="3">30</button></div>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="4">30</button></div>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="5">30</button></div>
+    </div>
+    <div class='row py-2'>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="1">40</button></div>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="2">40</button></div>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="3">40</button></div>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="4">40</button></div>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="5">40</button></div>
+    </div>
+    <div class='row py-2'>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="1">50</button></div>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="2">50</button></div>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="3">50</button></div>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="4">50</button></div>
+        <div class='col'><button type="button" class="cb btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#modal-question" value="5">50</button></div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-question" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="label-question">Question</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <pre id="question">
+                </pre>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-answer">Answer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-answer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="label-answer">Answer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <pre id="answer">
+
+                </pre>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} {% block foot %}
+<script src="{{ url_for( 'static',filename='js/index.js' ) }} "></script>{% endblock %}
