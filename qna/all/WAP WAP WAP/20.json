@@ -1,0 +1,1 @@
+{ "qnas": [{ "cquestion": "#include <stdio.h>\nint main(){\n    int a,b,c,d,e;\n    printf(\"Enter 5 numbers: \");\n    scanf(\"%d%d%d%d%d\",&a,&b,&c,&d,&e);\n\n    int sum = a+b+c+d+e;\n    int average = sum/5;\n\n    printf(\"Sum :%d\\n\",sum);\n    printf(\"Average :%d\\n\",sum);\n    return 0;\n}", "answer": "WAP to calculate sum and average of 5 numbers" }] }

@@ -1,5 +1,5 @@
 {% extends '0Base.html' %} {% block head %}
-<link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}" /> {% endblock %} {% block title %} Cody | Home {% endblock %} {% block navBar %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}" /> {% endblock %} {% block title %} Cody | Versions {% endblock %} {% block navBar %}
 
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark border-secondary border-bottom">
     <div class="container-fluid">
@@ -12,10 +12,10 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/versions">Versions</a>
+                    <a class="nav-link active" href="/versions">Versions</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/contact" tabindex="-1">Contact us</a>
@@ -28,14 +28,12 @@
 
 {% endblock %} {% block body %}
 <div class="p-4">
-    <h3>Over view</h3>
-    <p>This is a game based on Jepardy but uses questions related to computer science.</p>
-    <br>
-    <h4>About game</h4>
-    <p>It is a simple quiz game. Every game has 5 categories and each category consists of options of varying value. Higher the value harder the questions. The game is started my one player pick one of the options. The option will show a question and all
-        the players are able to answer, first to answer the question will chosen. If the player guesses the right answer the player gets the points equal to the value of the option or lose points if wrong answer. The player also gets to pick the next
-        option. </p>
-    <h4></h4>
-    <p></p>
+    <h3>Versions</h3>
+    <ul>
+        {% for version in versions %}
+        <li>
+            <a class="btn btn-secondary m-2" href="{{'/play?ver='+version}}">{{version}}</a>
+        </li> {% endfor %}
+    </ul>
 </div>{% endblock %} {% block foot %}
 <script src="{{ url_for( 'static',filename='js/index.js' ) }}"></script>{% endblock %}

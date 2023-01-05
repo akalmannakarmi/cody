@@ -11,21 +11,37 @@ app.secret_key ="secret"
 @app.route('/getImg/<path:p>',methods=['GET'])
 def getImg(p):
     startTime = time()
-    cprint(f"Users Data Sent:{time()-startTime}",'cyan')
-    if path.exists(p):
-        return send_file(p)
-    return render_template("error.html",error=f"{p} does not exist")
+    if not path.exists(p):
+        return render_template("error.html",error=f"{p} does not exist")
+    cprint(f"Image Sent:{time()-startTime}",'cyan')
+    return send_file(p)
 
-@app.route('/play/<path:ver>',methods=['GET'])
-def play(ver):
+@app.route('/versions',methods=['GET'])
+def versions():
     startTime = time()
-    p = f'qna/{ver}'
+    
+    if not path.exists('qna'):
+        return render_template("error.html",error=f"QNAs not found")
+    
+    versions = listdir('qna')
+    cprint(f"Versions Sent:{time()-startTime}",'cyan')
+    return render_template("versions.html",versions=versions)
+
+@app.route('/play',methods=['GET'])
+def play():
+    startTime = time()
+    data = request.args
+    if not 'ver' in data:
+        return redirect('/play?ver=all')
+    
+    p = f"qna/{data['ver']}"
     if not path.exists(p):
         return render_template("error.html",error=f"{p} does not exist")
     categories = listdir(p)
-    categories.remove('img')
+    if 'img' in categories:
+        categories.remove('img')
         
-    cprint(f"Users Data Sent:{time()-startTime}",'cyan')
+    cprint(f"Play Sent:{time()-startTime}",'cyan')
     return render_template("play.html",categories=categories)
 
 

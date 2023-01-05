@@ -1,0 +1,1 @@
+{ "qnas": [{ "cquestion": "Invalid variable declaration\na) int Num;\nb) char age[] = \"56\";\nc) float monthly salary = 45000.00;\nd) int fav_Num[2] = {2,9};", "answer": "What is c) float monthly salary = 45000.00;?" }] }
