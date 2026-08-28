@@ -1,5 +1,6 @@
 import logging
 import os
+from typing import Any
 
 from flask import Flask, render_template
 from flask_limiter import Limiter
@@ -12,10 +13,10 @@ from .config import DevConfig
 limiter = Limiter(key_func=get_remote_address)
 csrf = CSRFProtect()
 
-from .routes import images_bp, main_bp, play_bp
+from .routes import images_bp, main_bp, play_bp  # noqa: E402
 
 
-def create_app(config_object=None):
+def create_app(config_object: Any = None) -> Flask:
     app = Flask(__name__)
     app.config.from_object(config_object or DevConfig)
     app.config["QNA_DIR"] = os.path.abspath(app.config["QNA_DIR"])
@@ -45,17 +46,17 @@ def create_app(config_object=None):
     return app
 
 
-def _handle_404(error):
+def _handle_404(error: Any) -> tuple[str, int]:
     return render_template("404.html"), 404
 
 
-def _handle_500(error):
+def _handle_500(error: Any) -> tuple[str, int]:
     current_app_logger = logging.getLogger(__name__)
     current_app_logger.exception("Unhandled error: %s", error)
     return render_template("error.html"), 500
 
 
-def _configure_logging(app):
+def _configure_logging(app: Flask) -> None:
     level = logging.DEBUG if app.debug else logging.INFO
     logging.basicConfig(level=level)
     app.logger.setLevel(level)

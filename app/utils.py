@@ -3,7 +3,7 @@
 import os
 
 
-def resolve_safe_image_path(qna_dir, rel_path):
+def resolve_safe_image_path(qna_dir: str, rel_path: str) -> str | None:
     """Resolve a relative image path safely within the qna directory.
 
     Returns the absolute path if safe, or None if the path escapes the root.

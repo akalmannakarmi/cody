@@ -1,4 +1,3 @@
-import os
 import random
 
 from app.data import QnaStore
@@ -61,9 +60,7 @@ def test_random_question_empty_qnas(store):
 def test_normalization_code_keys(tmp_path):
     base = tmp_path / "qna" / "v" / "Cat"
     base.mkdir(parents=True)
-    (base / "10.json").write_text(
-        '{ "qnas": [ { "cquestion": "int x = 1;", "canswer": "int y = 2;" } ] }'
-    )
+    (base / "10.json").write_text('{ "qnas": [ { "cquestion": "int x = 1;", "canswer": "int y = 2;" } ] }')
     store = QnaStore(str(tmp_path / "qna"))
     qna = store.random_question("v", "Cat", 10)
     assert qna["code"] == "int x = 1;"
@@ -73,9 +70,7 @@ def test_normalization_code_keys(tmp_path):
 def test_random_question_uses_seeded_rng(tmp_path):
     base = tmp_path / "qna" / "v" / "Cat"
     base.mkdir(parents=True)
-    (base / "10.json").write_text(
-        '{ "qnas": [ {"question": "A"}, {"question": "B"}, {"question": "C"} ] }'
-    )
+    (base / "10.json").write_text('{ "qnas": [ {"question": "A"}, {"question": "B"}, {"question": "C"} ] }')
     rng = random.Random(42)
     store = QnaStore(str(tmp_path / "qna"), rng=rng)
     seen = {store.random_question("v", "Cat", 10)["text"] for _ in range(10)}
