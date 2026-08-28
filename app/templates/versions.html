@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Cody | Versions{% endblock %}
+{% block body %}
+<div class="container p-4">
+    <h3>Versions</h3>
+    <ul>
+        {% for version in versions %}
+        <li>
+            <a class="btn btn-secondary m-2" href="/play?ver={{ version }}">{{ version }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,4 @@
+{ "qnas": [
+  { "question": "Fixture multi A", "answer": "Answer A" },
+  { "question": "Fixture multi B", "answer": "Answer B" }
+] }

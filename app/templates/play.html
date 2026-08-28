@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}Cody | Play{% endblock %}
+{% block nav %}{% endblock %}
+{% block body %}
+
+<div class="container mt-4">
+    <div class="text-center mb-3">
+        <p class="fw-bold fs-1 mb-0">Cody</p>
+        <span class="badge bg-secondary">{{ current_version }}</span>
+    </div>
+
+    <div id="board"></div>
+
+    <div class="text-center mt-3">
+        <button id="reset-btn" class="btn btn-outline-warning">Reset board</button>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-question" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="label-question" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content bg-dark">
+            <div class="modal-header border-bottom border-secondary">
+                <h5 class="modal-title fs-4" id="label-question">Question</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body px-5">
+                <p class="fs-5 d-none" id="question-text"></p>
+                <pre class="fs-5 d-none" id="question-code"></pre>
+                <div class="text-center d-none" id="question-img-wrap">
+                    <img class="img-fluid" id="question-img" src="" alt="Question image">
+                </div>
+            </div>
+            <div class="modal-footer border-top border-secondary">
+                <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="answer-btn">Answer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-answer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="label-answer" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content bg-dark">
+            <div class="modal-header border-bottom border-secondary">
+                <h5 class="modal-title fs-4" id="label-answer">Answer</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body px-5">
+                <p class="fs-5 d-none" id="answer-text"></p>
+                <pre class="fs-5 d-none" id="answer-code"></pre>
+                <div class="text-center d-none" id="answer-img-wrap">
+                    <img class="img-fluid" id="answer-img" src="" alt="Answer image">
+                </div>
+            </div>
+            <div class="modal-footer border-top border-secondary">
+                <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block foot %}
+<script>
+    window.BOARD = {{ (board or {'version': current_version, 'categories': categories, 'values': []}) | tojson }};
+</script>
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% endblock %}
