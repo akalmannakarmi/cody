@@ -3,13 +3,5 @@ services:
     build: .
     container_name: flask_app
     restart: always
-    environment:
-      - VIRTUAL_HOST=cody.akal.com.np 
-    networks:
-      - frontend
-    expose:
-      - "5000"
-
-networks:
-  frontend:
-    external: true
+    ports:
+      - "5000:5000"

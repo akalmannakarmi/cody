@@ -1,0 +1,15 @@
+.git
+.venv
+venv
+node_modules
+__pycache__
+*.pyc
+.env
+tests
+scripts
+docs
+plan.md
+README.md
+CONTRIBUTING.md
+CHANGELOG.md
+LICENSE
