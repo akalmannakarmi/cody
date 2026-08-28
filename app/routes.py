@@ -1,8 +1,10 @@
 import json
 import os
+from typing import Any
 
 from flask import (
     Blueprint,
+    Response,
     abort,
     current_app,
     redirect,
@@ -11,35 +13,37 @@ from flask import (
     send_from_directory,
 )
 
+from . import limiter
 from .data import IMAGE_EXTENSIONS, QnaStore
+from .utils import resolve_safe_image_path
 
 main_bp = Blueprint("main", __name__)
 play_bp = Blueprint("play", __name__)
 images_bp = Blueprint("images", __name__)
 
 
-def get_store():
+def get_store() -> QnaStore:
     return QnaStore(current_app.config["QNA_DIR"])
 
 
 @main_bp.route("/")
-def index():
+def index() -> str:
     return render_template("index.html")
 
 
 @main_bp.route("/versions")
-def versions():
+def versions() -> str:
     store = get_store()
     return render_template("versions.html", versions=store.versions())
 
 
 @main_bp.route("/contact")
-def contact():
+def contact() -> str:
     return render_template("contact.html")
 
 
 @play_bp.route("/play")
-def play():
+def play() -> Any:
     version = request.args.get("ver")
     if not version:
         return redirect("/play?ver=all")
@@ -50,9 +54,7 @@ def play():
         abort(404)
 
     categories = store.categories(version)
-    values = sorted(
-        {v for category in categories for v in store.values(version, category)}
-    )
+    values = sorted({v for category in categories for v in store.values(version, category)})
     board = {
         "version": version,
         "categories": categories,
@@ -67,45 +69,45 @@ def play():
 
 
 @images_bp.route("/getImg/<path:path>", methods=["GET"])
-def serve_image(path):
-    root = os.path.realpath(current_app.config["QNA_DIR"])
-    base = os.path.dirname(root)
-    full = os.path.realpath(os.path.join(base, path))
-    if not full.startswith(root + os.sep):
+def serve_image(path: str) -> Response:
+    full = resolve_safe_image_path(current_app.config["QNA_DIR"], path)
+    if full is None:
         abort(404)
     if os.path.splitext(full)[1].lower() not in IMAGE_EXTENSIONS:
         abort(404)
+    root = os.path.realpath(current_app.config["QNA_DIR"])
     relative = os.path.relpath(full, root)
     return send_from_directory(root, relative)
 
 
 @images_bp.route("/qna", methods=["POST"])
-def qna():
+@limiter.limit("30/minute")  # type: ignore[misc, has-type]
+def qna() -> tuple[dict[str, Any], int]:
     store = get_store()
     try:
         payload = json.loads(request.data or b"{}")
     except (ValueError, TypeError):
-        return _qna_error("Request body is not valid JSON"), 404
+        return {"error": "Request body is not valid JSON"}, 400
 
     if not all(key in payload for key in ("version", "category", "value")):
-        return _qna_error("Missing version, category or value"), 404
+        return {"error": "Missing version, category or value"}, 400
 
     version = payload["version"]
     category = payload["category"]
 
     if version not in store.versions():
-        return _qna_error(f"Unknown version: {version}"), 404
+        return {"error": f"Unknown version: {version}"}, 404
     if category not in store.categories(version):
-        return _qna_error(f"Unknown category: {category}"), 404
+        return {"error": f"Unknown category: {category}"}, 404
 
     try:
         value = int(payload["value"])
     except (ValueError, TypeError):
-        return _qna_error("Value must be an integer"), 404
+        return {"error": "Value must be an integer"}, 400
 
     question = store.random_question(version, category, value)
     if question is None:
-        return _qna_error("No usable question found"), 404
+        return {"error": "No usable question found"}, 400
 
     response = {
         "category": category,
@@ -118,7 +120,3 @@ def qna():
         "answer": question["answer"],
     }
     return response, 200
-
-
-def _qna_error(message):
-    return {"error": message}

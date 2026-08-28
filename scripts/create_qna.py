@@ -11,22 +11,21 @@ import argparse
 import datetime
 import json
 import os
-import sys
 
 
 def append_qna(
-    qna_dir,
-    version,
-    category,
-    value,
-    text=None,
-    code=None,
-    image=None,
-    answer_text=None,
-    answer_code=None,
-    answer_image=None,
-    timestamp=False,
-):
+    qna_dir: str,
+    version: str,
+    category: str,
+    value: int,
+    text: str | None = None,
+    code: str | None = None,
+    image: str | None = None,
+    answer_text: str | None = None,
+    answer_code: str | None = None,
+    answer_image: str | None = None,
+    timestamp: bool = False,
+) -> str:
     """Append one QnA to the target JSON file.
 
     Creates missing version/category directories. Returns the absolute path to
@@ -37,7 +36,7 @@ def append_qna(
     value = int(value)
     qna_root = os.path.abspath(qna_dir)
     target_dir = os.path.join(qna_root, version, category)
-    target = os.path.join(target_dir, "%d.json" % value)
+    target = os.path.join(target_dir, f"{value}.json")
     os.makedirs(target_dir, exist_ok=True)
 
     item = {}
@@ -54,10 +53,10 @@ def append_qna(
     if answer_image:
         item["aimage"] = answer_image
     if timestamp:
-        item["created"] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+        item["created"] = datetime.datetime.now(datetime.UTC).isoformat()
 
     if os.path.isfile(target):
-        with open(target, "r", encoding="utf-8") as fh:
+        with open(target, encoding="utf-8") as fh:
             data = json.load(fh)
     else:
         data = {}
@@ -71,7 +70,7 @@ def append_qna(
     return os.path.abspath(target)
 
 
-def main(argv=None):
+def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="create_qna",
         description="Append a QnA to a qna data file (creating dirs as needed).",
@@ -109,7 +108,7 @@ def main(argv=None):
         answer_image=args.answer_image,
         timestamp=args.timestamp,
     )
-    print("Wrote %s" % target)
+    print(f"Wrote {target}")
     return 0
 
 

@@ -17,7 +17,8 @@ def test_append_qna_writes_loader_understandable_item(tmp_path):
         answer_text="New answer",
     )
     assert path.endswith(os.path.join("qna", "ver1", "Memes", "20.json"))
-    data = json.load(open(path, encoding="utf-8"))
+    with open(path, encoding="utf-8") as fh:
+        data = json.load(fh)
     assert data["qnas"] == [
         {
             "question": "New question",
@@ -43,13 +44,15 @@ def test_append_qna_appends_to_existing_list(tmp_path):
     path = base / "10.json"
     path.write_text('{ "qnas": [ { "question": "first" } ] }')
     append_qna(str(tmp_path / "qna"), "ver1", "Memes", 10, text="second")
-    data = json.load(open(path, encoding="utf-8"))
+    with open(path, encoding="utf-8") as fh:
+        data = json.load(fh)
     assert len(data["qnas"]) == 2
 
 
 def test_append_qna_timestamp_writes_utc_iso(tmp_path):
     path = append_qna(str(tmp_path / "qna"), "ver1", "Memes", 10, text="x", timestamp=True)
-    data = json.load(open(path, encoding="utf-8"))
+    with open(path, encoding="utf-8") as fh:
+        data = json.load(fh)
     created = data["qnas"][0]["created"]
     assert created.endswith("+00:00")
 
