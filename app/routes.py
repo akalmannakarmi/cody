@@ -11,6 +11,7 @@ from flask import (
     send_from_directory,
 )
 
+from . import limiter
 from .data import IMAGE_EXTENSIONS, QnaStore
 
 main_bp = Blueprint("main", __name__)
@@ -80,6 +81,7 @@ def serve_image(path):
 
 
 @images_bp.route("/qna", methods=["POST"])
+@limiter.limit("30/minute")
 def qna():
     store = get_store()
     try:

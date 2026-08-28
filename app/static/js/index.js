@@ -77,12 +77,17 @@
         var cat = tile.dataset.category;
         var val = tile.dataset.value;
 
+        var csrfToken = document.querySelector('meta[name="csrf-token"]');
+
         tile.disabled = true;
         tile.classList.add("used");
 
         fetch("/qna", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrfToken ? csrfToken.getAttribute("content") : ""
+            },
             body: JSON.stringify({ version: version, category: cat, value: val })
         })
             .then(function (resp) {

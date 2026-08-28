@@ -12,6 +12,7 @@ FIXTURES_DIR = os.path.join(os.path.dirname(__file__), "fixtures", "qna")
 def app():
     app = create_app()
     app.config.update(TESTING=True, QNA_DIR=os.path.abspath(FIXTURES_DIR))
+    app.config["WTF_CSRF_ENABLED"] = False
     return app
 
 
