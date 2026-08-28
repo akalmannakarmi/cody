@@ -17,10 +17,9 @@ import json
 import os
 
 from app.data import IMAGE_EXTENSIONS
+from app.qna_keys import LEGACY_ANSWER_KEYS, LEGACY_CONTENT_KEYS, LEGACY_IMAGE_KEYS
+from app.utils import resolve_safe_image_path
 
-LEGACY_CONTENT_KEYS = ("question", "qcode", "cquestion", "qimage")
-LEGACY_ANSWER_KEYS = ("answer", "acode", "canswer", "aimage")
-LEGACY_IMAGE_KEYS = ("qimage", "aimage")
 NON_JSON_EXTENSIONS = {".exe", ".bin", ".so", ".dll", ".o", ".a", ".c", ".h", ".md", ".txt"}
 
 
@@ -103,8 +102,6 @@ def _check_json_file(file_path, rel, qna_dir, report):
 
     errors = 0
     warnings = 0
-    qna_root = os.path.abspath(qna_dir)
-    image_root = os.path.dirname(qna_root)
     for index, item in enumerate(qnas):
         if not isinstance(item, dict):
             report("ERROR: %s item %d is not an object" % (rel, index))
@@ -120,9 +117,8 @@ def _check_json_file(file_path, rel, qna_dir, report):
             path = item.get(key)
             if not path:
                 continue
-            full = os.path.abspath(os.path.join(image_root, str(path)))
-            base_dir = image_root + os.sep
-            if not full.startswith(base_dir):
+            full = resolve_safe_image_path(qna_dir, str(path))
+            if full is None:
                 report("ERROR: %s item %d %s escapes qna root: %s" % (rel, index, key, path))
                 errors += 1
             elif not os.path.isfile(full):

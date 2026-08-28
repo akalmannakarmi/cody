@@ -13,6 +13,7 @@ from flask import (
 
 from . import limiter
 from .data import IMAGE_EXTENSIONS, QnaStore
+from .utils import resolve_safe_image_path
 
 main_bp = Blueprint("main", __name__)
 play_bp = Blueprint("play", __name__)
@@ -69,13 +70,12 @@ def play():
 
 @images_bp.route("/getImg/<path:path>", methods=["GET"])
 def serve_image(path):
-    root = os.path.realpath(current_app.config["QNA_DIR"])
-    base = os.path.dirname(root)
-    full = os.path.realpath(os.path.join(base, path))
-    if not full.startswith(root + os.sep):
+    full = resolve_safe_image_path(current_app.config["QNA_DIR"], path)
+    if full is None:
         abort(404)
     if os.path.splitext(full)[1].lower() not in IMAGE_EXTENSIONS:
         abort(404)
+    root = os.path.realpath(current_app.config["QNA_DIR"])
     relative = os.path.relpath(full, root)
     return send_from_directory(root, relative)
 
@@ -87,10 +87,10 @@ def qna():
     try:
         payload = json.loads(request.data or b"{}")
     except (ValueError, TypeError):
-        return _qna_error("Request body is not valid JSON"), 404
+        return _qna_error("Request body is not valid JSON"), 400
 
     if not all(key in payload for key in ("version", "category", "value")):
-        return _qna_error("Missing version, category or value"), 404
+        return _qna_error("Missing version, category or value"), 400
 
     version = payload["version"]
     category = payload["category"]
@@ -103,11 +103,11 @@ def qna():
     try:
         value = int(payload["value"])
     except (ValueError, TypeError):
-        return _qna_error("Value must be an integer"), 404
+        return _qna_error("Value must be an integer"), 400
 
     question = store.random_question(version, category, value)
     if question is None:
-        return _qna_error("No usable question found"), 404
+        return _qna_error("No usable question found"), 400
 
     response = {
         "category": category,

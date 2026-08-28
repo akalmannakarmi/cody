@@ -2,8 +2,10 @@ import json
 import os
 import random
 
+from .qna_keys import LEGACY_ANSWER_KEYS, LEGACY_CONTENT_KEYS
 
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".gif", ".webp"}
+MAX_QUESTION_VALUE = 1000
 
 
 class QnaStore:
@@ -58,7 +60,7 @@ class QnaStore:
                 value = int(root)
             except ValueError:
                 continue
-            if 0 <= value <= 1000:
+            if 0 <= value <= MAX_QUESTION_VALUE:
                 found.append(value)
         return sorted(found)
 
@@ -104,7 +106,7 @@ class QnaStore:
     def _is_usable(item):
         if not isinstance(item, dict):
             return False
-        return _coalesce(item, ("question", "qcode", "cquestion", "qimage")) is not None
+        return _coalesce(item, LEGACY_CONTENT_KEYS) is not None
 
     @staticmethod
     def _normalize(item):
