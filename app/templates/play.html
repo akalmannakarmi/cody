@@ -91,4 +91,5 @@
     </div>
 </div>
 {% endblock %} {% block foot %}
+<script>window.BOARD = {{ (board or {'version': current_version, 'categories': categories, 'values': []}) | tojson }}</script>
 <script src="{{ url_for( 'static',filename='js/index.js' ) }} "></script>{% endblock %}
