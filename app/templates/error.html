@@ -1,5 +1,10 @@
-{% extends '0Base.html' %} {% block title %} Error {% endblock %} {% block body %}
-<h1>An Error Occured</h1>
-<p>{{ error }}</p>
-
+{% extends 'base.html' %}
+{% block title %}Cody | Error{% endblock %}
+{% block nav %}{% endblock %}
+{% block body %}
+<div class="container p-4 text-center">
+    <h1 class="display-1 mt-5">Error</h1>
+    <p class="lead">{{ error }}</p>
+    <a href="/" class="btn btn-outline-light mt-3">Go home</a>
+</div>
 {% endblock %}

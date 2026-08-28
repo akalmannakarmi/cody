@@ -1,3 +1,42 @@
 body {
     padding-top: 4.5rem;
 }
+
+#board .row + .row {
+    margin-top: 0.25rem;
+}
+
+#board .row:first-child {
+    margin-bottom: 0.75rem;
+}
+
+.tile {
+    min-height: 4rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    transition: opacity 0.2s;
+}
+
+.tile:hover:not(:disabled) {
+    opacity: 0.85;
+}
+
+.tile.used {
+    opacity: 0.25;
+    background-color: #333 !important;
+    border-color: #444 !important;
+}
+
+.modal-content {
+    border: 1px solid #444;
+}
+
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+#board {
+    max-width: 900px;
+    margin: 0 auto;
+}
