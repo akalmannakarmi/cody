@@ -5,3 +5,16 @@ services:
     restart: always
     ports:
       - "5000:5000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+    read_only: true
+    tmpfs:
+      - /tmp
